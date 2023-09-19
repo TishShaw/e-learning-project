@@ -1,6 +1,7 @@
 import mongoose, { Document, Model, Schema } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
+// Define a regular expression to validate email addresses
 const emailRegexpattern: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // Define types for user model
@@ -70,3 +71,13 @@ userSchema.pre<IUser>('save', async function (next) {
 	this.password = await bcrypt.hash(this.password, 10);
 	next();
 });
+
+//  Compare password
+userSchema.methods.comparePassword = async function (
+	enteredPassword: string
+): Promise<boolean> {
+	return await bcrypt.compare(enteredPassword, this.password);
+};
+
+const userModel: Model<IUser> = mongoose.model('User', userSchema);
+export default userModel;
