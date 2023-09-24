@@ -8,10 +8,10 @@ export const ErrorMiddleware = (
 	next: NextFunction
 ) => {
 	err.statusCode = err.statusCode || 500;
-	err.message = err.messahe || 'Internal server error';
+	err.message = err.message || 'Internal server error';
 	//  Wrong mongodb ID error
 	if (err.name === 'CastError') {
-		const message = `Resouce not foind. Invalid ${err.path}`;
+		const message = `Resource not found. Invalid ${err.path}`;
 	}
 	// Duplicate key error
 	if (err.code === 1100) {
@@ -20,7 +20,7 @@ export const ErrorMiddleware = (
 	}
 	// Wrong jwt error
 	if (err.name === 'JsonWebTokenError') {
-		const message = `Json wed token is expired, try again`;
+		const message = `Json web token is expired, try again`;
 		err = new ErrorHandler(message, 400);
 	}
 
