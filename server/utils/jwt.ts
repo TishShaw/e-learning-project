@@ -16,15 +16,15 @@ const refreshTokenExpire = parseInt(
 //  Options for cookies
 export const accessTokenOptions: CookieOptions = {
 	expires: new Date(Date.now() * accessTokenExpire * 60 * 60 * 1000),
-	maxAge: accessTokenExpire * 24 * 60 * 60 * 1000,
+	maxAge: accessTokenExpire * 60 * 60 * 1000,
 	httpOnly: true,
 	sameSite: 'lax',
 	secure: true,
 };
 
 export const refreshTokenOptions: CookieOptions = {
-	expires: new Date(Date.now() * refreshTokenExpire * 60 * 60 * 1000),
-	maxAge: accessTokenExpire * 60 * 60 * 1000,
+	expires: new Date(Date.now() * refreshTokenExpire * 24 * 60 * 60 * 1000),
+	maxAge: accessTokenExpire * 24 * 60 * 60 * 1000,
 	httpOnly: true,
 	sameSite: 'lax',
 };
