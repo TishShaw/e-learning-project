@@ -40,8 +40,8 @@ interface ICourse extends Document {
 	tags: string;
 	level: string;
 	demoUrl: string;
-	benefits: { title: string[] };
-	prerequisites: string;
+	benefits: { title: string }[];
+	prerequisites: { title: string }[];
 	reviews: IReview[];
 	courseData: ICourseData[];
 	ratings?: number;
@@ -70,7 +70,6 @@ const commentSchema = new Schema<IComment>({
 
 const courseDataSchema = new Schema<ICourseData>({
 	videoUrl: String,
-	videoThumbnail: Object,
 	title: String,
 	videoSection: String,
 	description: String,
@@ -100,11 +99,9 @@ const courseSchema = new Schema<ICourse>({
 	thumbnail: {
 		public_id: {
 			type: String,
-			required: true,
 		},
 		url: {
 			type: String,
-			required: true,
 		},
 	},
 	tags: {
