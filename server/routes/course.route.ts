@@ -4,6 +4,7 @@ import {
 	addQuestion,
 	addReplyToReview,
 	addReview,
+	deleteCourse,
 	editCourse,
 	getAllCourses,
 	getCourseByUser,
@@ -46,5 +47,7 @@ courseRouter.put(
 	authorizeRoles('admin'),
 	addReplyToReview
 );
+
+courseRouter.delete('/delete-course/:id', isAuthenticated, deleteCourse);
 
 export default courseRouter;
