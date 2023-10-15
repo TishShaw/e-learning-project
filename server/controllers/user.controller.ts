@@ -218,7 +218,7 @@ export const updateAccessToken = CatchAsyncerror(
 
 			if (!session) {
 				return next(
-					new ErrorHandler('Please login to access this resource', 400)
+					new ErrorHandler('Please login to access this resource!', 400)
 				);
 			}
 
