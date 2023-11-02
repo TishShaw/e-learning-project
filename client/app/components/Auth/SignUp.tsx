@@ -9,6 +9,8 @@ import {
 } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 import { styles } from '../../../app/styles/style';
+import { useResgisterMutation } from '@/redux/features/auth/authApi';
+import toast from 'react-hot-toast';
 
 type Props = {
 	setRoute: (route: string) => void;
@@ -24,12 +26,33 @@ const schema = Yup.object().shape({
 
 const SignUp: FC<Props> = ({ setRoute }) => {
 	const [show, setShow] = useState(false);
+	const [register, { data, error, isSuccess }] = useResgisterMutation();
+
+	useEffect(() => {
+		if (isSuccess) {
+			const message = data?.message || 'Registration Successful';
+			toast.success(message);
+			setRoute('verification');
+		}
+
+		if (error) {
+			if ('data' in error) {
+				const errorData = error as any;
+				toast.error(errorData.data.message);
+			}
+		}
+	}, [isSuccess, error]);
 
 	const formik = useFormik({
 		initialValues: { name: '', email: '', password: '' },
 		validationSchema: schema,
-		onSubmit: async ({ email, password }) => {
-			setRoute('verification');
+		onSubmit: async ({ name, email, password }) => {
+			const data = {
+				name,
+				email,
+				password,
+			};
+			await register(data);
 		},
 	});
 
@@ -118,7 +141,7 @@ const SignUp: FC<Props> = ({ setRoute }) => {
 					<FcGoogle size={30} className='cursor-pointer mr-2' />
 					<AiFillGithub size={30} className='cursor-pointer ml-2' />
 				</div>
-				<h5 className='text-center pt-4 font-Poppins text-[14px]'>
+				<h5 className='light:text-black text-center pt-4 font-Poppins text-[14px]'>
 					Already have an account?{' '}
 					<span
 						className='text-[#2190ff] pl-1 cursor-pointer'
