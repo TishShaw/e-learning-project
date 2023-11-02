@@ -83,7 +83,7 @@ interface IActivationToken {
 }
 
 export const createActivationToken = (user: any): IActivationToken => {
-	const activationCode = Math.floor(1000 * Math.random() * 9000).toString();
+	const activationCode = Math.floor(1000 + Math.random() * 9000).toString();
 
 	const token = jwt.sign(
 		{
